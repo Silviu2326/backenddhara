@@ -59,11 +59,16 @@ app.use('/api/unsubscribe', require('./routes/unsubscribe'));
 
 // Ruta raíz
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     mensaje: 'Bienvenido a Dhara Dimension API',
     version: '1.0.0',
     estado: 'En funcionamiento'
   });
+});
+
+// Health check simple para Railway
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
 });
 
 // Manejo de errores
@@ -85,9 +90,27 @@ emailService.initialize();
 
 // Iniciar servidor
 const HOST = process.env.HOST || '0.0.0.0';
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`🚀 Servidor ejecutándose en http://${HOST}:${PORT}`);
   console.log(`📝 Entorno: ${process.env.NODE_ENV || 'development'}`);
 });
+
+// Manejo de señales para cierre graceful
+const gracefulShutdown = (signal) => {
+  console.log(`\n${signal} recibido. Cerrando servidor...`);
+  server.close(() => {
+    console.log('✅ Servidor cerrado correctamente');
+    process.exit(0);
+  });
+
+  // Forzar cierre después de 10 segundos
+  setTimeout(() => {
+    console.error('⚠️ Forzando cierre del servidor');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 module.exports = app;
