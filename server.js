@@ -14,8 +14,11 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 
 // Configuración de CORS desde variable de entorno
-const allowedOrigins = process.env.CORS_ORIGINS
-  ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+const corsOriginsEnv = process.env.CORS_ORIGINS || '';
+console.log('🔍 CORS_ORIGINS env variable:', corsOriginsEnv);
+
+const allowedOrigins = corsOriginsEnv
+  ? corsOriginsEnv.split(',').map(origin => origin.trim())
   : [
       'http://localhost:5173',
       'http://localhost:5174',
@@ -24,15 +27,47 @@ const allowedOrigins = process.env.CORS_ORIGINS
       'https://www.dharadimension.vercel.app'
     ];
 
+// Añadir automáticamente variantes con y sin www para cada dominio
+const expandedOrigins = [...allowedOrigins];
+allowedOrigins.forEach(origin => {
+  try {
+    const url = new URL(origin);
+    if (url.hostname.startsWith('www.')) {
+      // Si tiene www, añadir versión sin www
+      const withoutWww = `${url.protocol}//${url.hostname.replace('www.', '')}${url.port ? ':' + url.port : ''}`;
+      if (!expandedOrigins.includes(withoutWww)) {
+        expandedOrigins.push(withoutWww);
+      }
+    } else if (!url.hostname.includes('localhost')) {
+      // Si no tiene www y no es localhost, añadir versión con www
+      const withWww = `${url.protocol}//www.${url.hostname}${url.port ? ':' + url.port : ''}`;
+      if (!expandedOrigins.includes(withWww)) {
+        expandedOrigins.push(withWww);
+      }
+    }
+  } catch (e) {
+    console.warn(`⚠️ Error procesando origen: ${origin}`, e.message);
+  }
+});
+
 const corsOptions = {
   origin: function (origin, callback) {
     // Permitir peticiones sin origen (como Postman, curl, etc)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('✅ CORS permitido: petición sin origen (server-to-server)');
+      return callback(null, true);
+    }
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Normalizar el origen para la comparación
+    const normalizedOrigin = origin.trim().toLowerCase();
+    const normalizedAllowedOrigins = expandedOrigins.map(o => o.trim().toLowerCase());
+
+    if (normalizedAllowedOrigins.includes(normalizedOrigin)) {
+      console.log(`✅ CORS permitido: ${origin}`);
       callback(null, true);
     } else {
-      console.log(`❌ CORS blocked origin: ${origin}`);
+      console.log(`❌ CORS bloqueado: ${origin}`);
+      console.log(`   Orígenes permitidos:`, expandedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -45,7 +80,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Log de orígenes permitidos
-console.log('✅ CORS configurado para:', allowedOrigins);
+console.log('✅ CORS configurado para:', expandedOrigins);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
