@@ -61,16 +61,16 @@ class EmailService {
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f5f5f5; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #8CA48F 0%, #6b856e 100%); color: white; padding: 40px 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .header h1 { margin: 0; font-size: 28px; }
+        .header { background: #ffffff; padding: 0; text-align: center; border-radius: 10px 10px 0 0; overflow: hidden; }
+        .header img { width: 100%; height: auto; display: block; border-radius: 10px 10px 0 0; }
         .content { background: #ffffff; padding: 40px 30px; border-radius: 0; }
         .content p { margin-bottom: 20px; font-size: 16px; }
         .content strong { color: #8CA48F; }
-        .footer { background: #f9f9f9; padding: 30px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; color: #666; }
-        .footer h4 { margin: 0 0 15px 0; color: #333; }
-        .footer ul { text-align: left; padding-left: 20px; margin: 10px 0; }
-        .footer li { margin-bottom: 8px; }
-        .unsubscribe { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; }
+        .footer { background: #f9f9f9; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 10px; color: #666; line-height: 1.4; }
+        .footer h4 { margin: 0 0 10px 0; color: #333; font-size: 11px; }
+        .footer ul { text-align: left; padding-left: 15px; margin: 8px 0; }
+        .footer li { margin-bottom: 5px; }
+        .unsubscribe { margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 9px; }
         .instagram { display: inline-block; background: #8CA48F; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; margin-top: 20px; font-weight: bold; }
         .instagram:hover { background: #6b856e; }
     </style>
@@ -78,7 +78,7 @@ class EmailService {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌿 Dhara Dimension</h1>
+            <img src="https://jeqqvtliltdtbxsgdedo.supabase.co/storage/v1/object/public/email-images/email-images.png" alt="Dhara Dimension" />
         </div>
         <div class="content">
             <p>Hola ${name}:</p>
@@ -87,7 +87,7 @@ class EmailService {
             <p>Dhara nace para cambiar las reglas del juego. Venimos a darte la voz y el lugar que el sector merece. Como persona fundadora, ya tienes asegurados tus 3 meses gratis del plan avanzado en cuanto abramos puertas.</p>
             <p>Mientras terminamos de pulir cada detalle, te invitamos a que te unas a nuestra comunidad en Instagram, donde estamos compartiendo los avances de esta revolución:</p>
             <p style="text-align: center;">
-                <a href="https://instagram.com/dharadimension" class="instagram">Instagram</a>
+                <a href="https://www.instagram.com/dhara_dimensionhumana?igsh=MTYyc2hsMHZ5eTA5Zw==" class="instagram">Instagram</a>
             </p>
             <p>Gracias por confiar en nosotras desde el inicio. Gracias por sentarte en primera fila.</p>
             <p>¡Vamos a elevar el bienestar holístico!</p>
@@ -125,23 +125,24 @@ class EmailService {
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f5f5f5; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #A2B2C2 0%, #8a9aa8 100%); color: white; padding: 40px 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .header h1 { margin: 0; font-size: 28px; }
+        .header { background: #ffffff; padding: 0; text-align: center; border-radius: 10px 10px 0 0; overflow: hidden; }
+        .header img { width: 100%; height: auto; display: block; border-radius: 10px 10px 0 0; }
         .content { background: #ffffff; padding: 40px 30px; border-radius: 0; }
         .content p { margin-bottom: 20px; font-size: 16px; }
         .content strong { color: #A2B2C2; }
-        .footer { background: #f9f9f9; padding: 30px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; color: #666; }
-        .footer h4 { margin: 0 0 15px 0; color: #333; }
-        .footer ul { text-align: left; padding-left: 20px; margin: 10px 0; }
-        .footer li { margin-bottom: 8px; }
+        .footer { background: #f9f9f9; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 10px; color: #666; line-height: 1.4; }
+        .footer h4 { margin: 0 0 10px 0; color: #333; font-size: 11px; }
+        .footer ul { text-align: left; padding-left: 15px; margin: 8px 0; }
+        .footer li { margin-bottom: 5px; }
         .instagram { display: inline-block; background: #A2B2C2; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; margin-top: 20px; font-weight: bold; }
         .instagram:hover { background: #8a9aa8; }
+        .unsubscribe { margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 9px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌿 Dhara Dimension</h1>
+            <img src="https://jeqqvtliltdtbxsgdedo.supabase.co/storage/v1/object/public/email-images/email-images.png" alt="Dhara Dimension" />
         </div>
         <div class="content">
             <p>Hola, buscador/a de bienestar:</p>
@@ -151,7 +152,7 @@ class EmailService {
             <p>Dhara no será un lugar comercial más. Es un refugio diseñado para que, con un par de toques, encuentres el acompañamiento que necesitas para cambiar esta vida loca que llevamos.</p>
             <p>Puedes empezar a conectar con nosotras y ver cómo avanza el proyecto aquí:</p>
             <p style="text-align: center;">
-                <a href="https://instagram.com/dharadimension" class="instagram">Instagram</a>
+                <a href="https://www.instagram.com/dhara_dimensionhumana?igsh=MTYyc2hsMHZ5eTA5Zw==" class="instagram">Instagram</a>
             </p>
             <p>Gracias por estar aquí desde el principio. Gracias por elegirte.</p>
             <p>Con cariño,<br>El equipo de Dhara</p>
