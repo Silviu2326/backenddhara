@@ -13,15 +13,29 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 
-// Configuración de CORS
+// Configuración de CORS desde variable de entorno
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+  : [
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:5175',
+      'https://dharadimension.vercel.app',
+      'https://www.dharadimension.vercel.app'
+    ];
+
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://localhost:5175',
-    'https://dharadimension.vercel.app',
-    'https://www.dharadimension.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    // Permitir peticiones sin origen (como Postman, curl, etc)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log(`❌ CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -29,6 +43,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Log de orígenes permitidos
+console.log('✅ CORS configurado para:', allowedOrigins);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
