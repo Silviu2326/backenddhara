@@ -84,8 +84,9 @@ app.use((req, res) => {
 emailService.initialize();
 
 // Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor ejecutándose en http://localhost:${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Servidor ejecutándose en http://${HOST}:${PORT}`);
   console.log(`📝 Entorno: ${process.env.NODE_ENV || 'development'}`);
 });
 
